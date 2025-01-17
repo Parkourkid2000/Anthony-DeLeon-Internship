@@ -39,17 +39,17 @@ const TopSellers = () => {
                 ? (new Array(12).fill(0).map((_, index) => (
                   <li key={index}>
                       <div className="author_list_pp bg-black opacity-25 p-2">
-                        <a >
+                        <div >
                           <img
                             className="lazy pp-author"
                          alt="" />
                           {/* <i className="fa fa-check"></i> */}
-                        </a>
+                        </div>
                       </div>
                       <div className="author_list_info">
-                        <a>
+                        <div>
                           
-                        </a>
+                        </div>
                         <span className="bg-black opacity-25 w-8 text-black">__</span>
                       </div>
                     </li>
