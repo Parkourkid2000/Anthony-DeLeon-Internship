@@ -79,9 +79,9 @@ const NewItems = () => {
     fetchNewItems();
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {}, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {}, 1000);
+  // }, []);
 
   return (
     <section id="section-items" className="no-bottom">
