@@ -7,32 +7,20 @@ import CountdownTimer from "../home/CountdownTimer";
 
 const ExploreItems = () => {
   const [loading, setLoading] = useState(true);
-  
+
   const [items, setItems] = useState([]);
   const [visibleItems, setVisibleItems] = useState(8);
   const [exploreItems, setExploreItems] = useState([]);
 
-  const [option, setOption] = useState('');
-
-  async function fetchExploreItems(event) {
-    // setOption(event.target.value);
+  async function filterExploreItems(event) {
     const { data } = await axios.get(
-      `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore`
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${
+        event.target.value ? `?filter=${event.target.value}` : ""
+      }`
     );
-    // console.log(data);
     setExploreItems(data);
     setItems(data.slice(0, visibleItems));
   }
-  
-  async function filterExploreItems(event) {
-  setOption(event.target.value)
-  const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=${option}`)
-console.log(data)  
-setExploreItems(data)
-
-  }
-  
-  
 
   function loadMore() {
     const nextVisibleItems = visibleItems + 4;
@@ -45,8 +33,8 @@ setExploreItems(data)
   }, 2000);
 
   useEffect(() => {
-    fetchExploreItems();
-  }, [option]);
+    filterExploreItems({ target: { value: "" } });
+  }, []);
 
   return (
     <>
