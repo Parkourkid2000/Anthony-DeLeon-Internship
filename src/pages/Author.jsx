@@ -6,25 +6,32 @@ import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
 
 const Author = () => {
-const [author, setAuthor] = useState([])
+  const [author, setAuthor] = useState([]);
 
-const [loading, setLoading] = useState(true)
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  const { authorId } = useParams()
+  function FollowToggle() {
+    setIsFollowing((prevState) => !prevState);
+  }
 
- async function fetchAuthor() {
-  const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`)
-setAuthor(data)
-console.log(data.nftCollection)
- }
+  const [loading, setLoading] = useState(true);
 
- setTimeout(() => {
+  const { authorId } = useParams();
 
- }, 2000)
+  async function fetchAuthor() {
+    const { data } = await axios.get(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
+    );
+    setAuthor(data);
+  }
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
 
   useEffect(() => {
-    fetchAuthor()
-  }, [])
+    fetchAuthor();
+  }, []);
 
   return (
     <div id="wrapper">
@@ -39,59 +46,116 @@ console.log(data.nftCollection)
           style={{ background: `url(${AuthorBanner}) top` }}
         ></section>
 
+        {loading ? (
+          <section aria-label="section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar bg-black opacity-25">
+                        <img alt="" />
 
-
-        <section aria-label="section">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={author.authorImage} alt="" />
-
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          {author.authorName}
-                          <span className="profile_username">@{author.tag}</span>
-                          <span id="wallet" className="profile_wallet">
-                            {author.address}
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
+                        <div className="profile_name bg-black opacity-25 text-black">
+                          <h4>
+                            author name
+                            <span className="profile_username bg-black opacity-25">
+                              @12345678
+                            </span>
+                            <span
+                              id="wallet"
+                              className="profile_wallet bg-black opacity-25 text-black"
+                            >
+                              addresslengthisxcharacters
+                            </span>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower bg-black opacity-25 text-black ml-2">
+                          {" "}
+                          000 followers
+                        </div>
+                        <Link
+                          to="#"
+                          className="btn-main bg-black opacity-25 text-black no-cursor"
+                        >
+                          Follow
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_follower">{author.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
-                    </div>
+                </div>
+
+                <div className="col-md-12">
+                  <div className="de_tab tab_simple">
+                    <AuthorItems />
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+        ) : (
+          <section aria-label="section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar">
+                        <img src={author.authorImage} alt="" />
 
-              <div className="col-md-12">
-                <div className="de_tab tab_simple">
-                  <AuthorItems 
-                  // id={author.nftCollection.id}
-                  // likes={author.nftCollection.likes}
-                  // nftId={author.nftCollection.nftId}
-                  // nftImage={author.nftCollection.nftImage}
-                  // price={author.nftCollection.price}
-                  // title={author.nftCollection.title}
-                   />
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            {author.authorName}
+                            <span className="profile_username">
+                              @{author.tag}
+                            </span>
+                            <span id="wallet" className="profile_wallet">
+                              {author.address}
+                            </span>
+                            <button id="btn_copy" title="Copy Text">
+                              Copy
+                            </button>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">
+                          {isFollowing
+                            ? author.followers + 1
+                            : author.followers}{" "}
+                          followers
+                        </div>
+                        <Link
+                          to="#"
+                          className="btn-main"
+                          onClick={FollowToggle}
+                        >
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-12">
+                  <div className="de_tab tab_simple">
+                    <AuthorItems
+                      nftCollection={author.nftCollection}
+                      authorImage={author.authorImage}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
+          </section>
+        )}
       </div>
     </div>
   );
