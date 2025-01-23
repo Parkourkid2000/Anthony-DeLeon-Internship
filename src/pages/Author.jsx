@@ -78,12 +78,12 @@ const Author = () => {
                           {" "}
                           000 followers
                         </div>
-                        <Link
+                        <button
                           to="#"
                           className="btn-main bg-black opacity-25 text-black no-cursor"
                         >
                           Follow
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
