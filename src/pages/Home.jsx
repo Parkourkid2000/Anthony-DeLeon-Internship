@@ -15,9 +15,8 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  //Any Comment
   
-  //FROM MAIN, DO NOT REMOVE
+ 
 
   return (
     <div id="wrapper">
