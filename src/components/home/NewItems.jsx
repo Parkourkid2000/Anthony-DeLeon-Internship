@@ -12,9 +12,17 @@ const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // After 2 seconds, set loading to false
+    }, 2000);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timer); // Clears the timeout if the component unmounts or before the effect runs again
+      // console.log('Timer cleared!');
+    };
+  }, []); // Empty dependency array - this effect runs once on mount
 
   function Arrow(props) {
     const { className, style, onClick } = props;
@@ -89,7 +97,12 @@ const NewItems = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Items</h2>
+              <h2 
+              data-aos="fade-up"
+              data-aos-offset="100"
+              data-aos-duration="750"
+              data-aos-once="true"
+              >New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>

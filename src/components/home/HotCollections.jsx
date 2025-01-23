@@ -7,14 +7,22 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
 const HotCollections = () => {
   const [hotItems, SetHotItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // After 2 seconds, set loading to false
+    }, 2000);
 
+    // Cleanup function
+    return () => {
+      clearTimeout(timer); // Clears the timeout if the component unmounts or before the effect runs again
+      // console.log('Timer cleared!');
+    };
+  }, []); // Empty dependency array - this effect runs once on mount
   function Arrow(props) {
     const { className, style, onClick } = props;
 
@@ -83,12 +91,18 @@ const HotCollections = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Hot Collections</h2>
+              <h2
+              data-aos="fade-up"
+              data-aos-offset="100"
+              data-aos-duration="750"
+              data-aos-once="true">Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
 
-          <Slider {...settings}>
+          <Slider {...settings}
+                        
+>
             {loading
               ? new Array(4).fill(0).map((_, index) => (
                   // <div key={index}>

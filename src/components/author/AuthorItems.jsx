@@ -6,9 +6,17 @@ import nftImage from "../../images/nftImage.jpg";
 const AuthorItems = ({ nftCollection=[], authorImage }) => {
   const [loading, setLoading ] = useState(true)
 
-  setTimeout(() => {
-    setLoading(false)
-  }, 2000)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // After 2 seconds, set loading to false
+    }, 2000);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timer); // Clears the timeout if the component unmounts or before the effect runs again
+      // console.log('Timer cleared!');
+    };
+  }, []); // Empty dependency array - this effect runs once on mount
 
   
   return (
