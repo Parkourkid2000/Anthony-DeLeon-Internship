@@ -15,10 +15,8 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  //ANY Change
   
-
+  
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
