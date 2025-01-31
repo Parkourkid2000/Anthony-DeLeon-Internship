@@ -16,7 +16,6 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
   
- //MAIN
 
   return (
     <div id="wrapper">
